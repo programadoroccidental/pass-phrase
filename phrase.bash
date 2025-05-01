@@ -43,7 +43,7 @@ cmd_phrase() {
 
   	[[ $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
 
-	mapfile -t words < <(shuf -n "$PASS_LENGTH" "$WORDLIST")
+	mapfile -t words < <(shuf -n "$length" "$WORDLIST")
 
 	local phrase
 	phrase=$(printf "%s$DELIMITER" "${words[@]}")
