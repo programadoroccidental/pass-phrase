@@ -1,4 +1,4 @@
-#!/bin/env/bash
+#!/usr/bin/env bash
 
 WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/pass-phrase/eff_large_wordlist.txt}"
 PASS_LENGTH="${PASSWORD_STORE_PHRASE_LENGTH:-12}"
