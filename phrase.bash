@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/pass-phrase/eff_large_wordlist.txt}"
-PASS_LENGTH="${PASSWORD_STORE_PHRASE_LENGTH:-12}"
+PHRASE_LENGTH="${PASSWORD_STORE_PHRASE_LENGTH:-12}"
 DELIMITER="${PASSWORD_STORE_PHRASE_DELIMITER:--}"
 
 VERSION="1.0"
@@ -31,7 +31,7 @@ cmd_phrase_usage() {
 
 cmd_phrase() {
 	local path="$1"
-	local length="${2:-$PASS_LENGTH}"
+	local length="${2:-$PHRASE_LENGTH}"
 	check_sneaky_paths "$path"
 	[[ $length =~ ^[0-9]+$ ]] || die "Error: pass-length \"$length\" must be a number."
 	[[ $length -gt 0 ]] || die "Error: pass-length must be greater than zero."
