@@ -1,0 +1,104 @@
+.TH PASS-PHRASE 1 "2025 May 15" "Password store passphrase extension"
+
+.SH NAME
+pass-phrase - A \fBpass\fP(1) extension to generate passphrases.
+
+.SH SYNOPSIS
+.B pass phrase
+[
+.I OPTIONS
+]... [
+.I ARGS
+]...
+
+.SH DESCRIPTION
+
+.B pass-phrase
+extends the
+.BR pass (1)
+utility with the
+.B phrase
+command to generate passphrases.
+
+.SH COMMANDS
+
+.TP
+\fBphrase\fP [ \fI--clip\fP, \fI-c\fP ] [ \fI--wordlist\fP, \fI-w\fP ] [ \fI--delimiter\fP, \fI-d\fP ] \fIpass-name [phrase-length]\fP
+Generate a new passphrase using a wordlist specified with \fI-w\fP or \fI--wordlist\fP 
+options, or through the \fIPASSWORD_STORE_PHRASE_WORDLIST\fP environment variable. 
+The passphrase will be created by combining words from the wordlist to achieve a 
+length of \fIphrase-length\fP (or \fIPASSWORD_STORE_PHRASE_LENGTH\fP if unspecified) 
+and will be inserted into \fIpass-name\fP. The words in the passphrase will be separated 
+by a delimiter, which can be specified using the \fI-d\fP or \fI--delimiter\fP options, or 
+through the \fIPASSWORD_STORE_PHRASE_DELIMITER\fP environment variable. If \fI--clip\fP 
+or \fI-c\fP is specified, do not print the password but instead copy
+it to the clipboard using
+.BR xclip (1)
+or
+.BR wl-clipboard(1)
+and then restore the clipboard after 45 (or \fIPASSWORD_STORE_CLIP_TIME\fP) seconds. The command 
+will prompt before overwriting an existing passphrase, unless \fI--force\fP or \fI-f\fP is specified. 
+
+.SH OPTIONS
+
+.TP
+\fB\-c\fP, \fB\-\-clip\fP
+Put the passphrase on the clipboard.
+
+.TP
+\fB\-d\fP, \fB\-\-delimiter\fP
+Specify a word delimiter.
+
+.TP
+\fB\-q\fP, \fB\-\-quiet\fP
+Be quiet.
+
+.TP
+\fB\-w\fP, \fB\-\-wordlist\fP
+Specify a wordlist file.
+
+.TP
+\fB\-v\fP, \fB\-\-version\fP
+Show version information.
+
+.TP
+\fB\-h\fP, \fB\-\-help\fP
+Show usage message.
+
+.SH ENVIRONMENT VARIABLES
+
+.TP
+.I PASSWORD_STORE_PHRASE_WORDLIST
+Specifies the directory path of the wordlist used for generating passphrases.
+
+.TP
+.I PASSWORD_STORE_PHRASE_LENGTH
+Defines the default length of the passphrase if the phrase-length parameter 
+is not specified when generating a passphrase.
+
+.TP
+.I PASSWORD_STORE_PHRASE_DELIMITER
+Allows you to override the default delimiter used in the generated passphrase.
+
+.SH SEE ALSO
+.BR pass (1),
+.BR xclip (1),
+.BR wl-clipboard (1)
+
+.SH AUTHORS
+.B pass-phrase
+was written by Programador Occidental
+
+.SH COPYING
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

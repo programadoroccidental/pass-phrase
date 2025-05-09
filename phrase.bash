@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/pass-phrase/eff_large_wordlist.txt}"
+WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/eff_large_wordlist.txt}"
 PHRASE_LENGTH="${PASSWORD_STORE_PHRASE_LENGTH:-12}"
 DELIMITER="${PASSWORD_STORE_PHRASE_DELIMITER:--}"
 
@@ -17,8 +17,8 @@ cmd_phrase_usage() {
 	echo
 	cat <<-_EOF
 		Usage:
-		    $PROGRAM phrase [--clip,-c] pass-name [pass-length]
-			Generate a new passphrase 
+		    $PROGRAM phrase [--clip,-c] [--wordlist,-w] [--delimiter,-d] pass-name [phrase-length]
+		        Generate a new passphrase 
 
 		    -c, --clip         Put the passphrase on the clipboard
 		    -d, --delimiter    Specify a word delimiter
@@ -26,6 +26,8 @@ cmd_phrase_usage() {
                     -v, --version      Show version information
 		    -w, --wordlist     Specify a wordlist file
 		    -h, --help         Print this help message and exit
+
+		More information may be found in the pass-phrase(1) man page.
 	_EOF
 }
 

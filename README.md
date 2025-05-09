@@ -6,7 +6,7 @@ A [pass](https://www.passwordstore.org/) extension to generate passphrases.
 
 ```
 Usage:
-    pass phrase [--clip,-c] pass-name [pass-length]
+    pass phrase [--clip,-c] [--wordlist,-w] [--delimiter,-d] pass-name [phrase-length]
 	Generate a new passphrase 
 
     -c, --clip         Put the passphrase on the clipboard
@@ -15,6 +15,8 @@ Usage:
     -v, --version      Show version information
     -w, --wordlist     Specify a wordlist file
     -h, --help         Print this help message and exit
+
+More information may be found in the pass-phrase(1) man page.
 ```
 
 ## Installation
