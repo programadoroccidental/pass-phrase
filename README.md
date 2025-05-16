@@ -7,10 +7,12 @@ A [pass](https://www.passwordstore.org/) extension to generate passphrases.
 ```
 Usage:
     pass phrase [--clip,-c] [--wordlist,-w] [--delimiter,-d] pass-name [phrase-length]
+	pass phrase [--clip,-c] [--wordlist,-w] [--delimiter,-d] [--force,-f] pass-name [phrase-length]
 	Generate a new passphrase 
 
     -c, --clip         Put the passphrase on the clipboard
     -d, --delimiter    Specify a word delimiter
+	-f, --force        Do not prompt before overwriting
     -q, --quiet        Be quiet
     -v, --version      Show version information
     -w, --wordlist     Specify a wordlist file
