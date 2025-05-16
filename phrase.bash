@@ -23,8 +23,8 @@ cmd_phrase_usage() {
 		    -c, --clip         Put the passphrase on the clipboard
 		    -d, --delimiter    Specify a word delimiter
 		    -f, --force        Do not prompt before overwriting
-                    -q, --quiet        Be quiet
-                    -v, --version      Show version information
+		    -q, --quiet        Be quiet
+		    -v, --version      Show version information
 		    -w, --wordlist     Specify a wordlist file
 		    -h, --help         Print this help message and exit
 
