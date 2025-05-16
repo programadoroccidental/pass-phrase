@@ -23,7 +23,7 @@ command to generate passphrases.
 .SH COMMANDS
 
 .TP
-\fBphrase\fP [ \fI--clip\fP, \fI-c\fP ] [ \fI--wordlist\fP, \fI-w\fP ] [ \fI--delimiter\fP, \fI-d\fP ] \fIpass-name [phrase-length]\fP
+\fBphrase\fP [ \fI--wordlist\fP, \fI-w\fP ] [ \fI--delimiter\fP, \fI-d\fP ] [ \fI--clip\fP, \fI-c\fP ] [ \fI--qrcode\fP, \fI-q\fP ] [ \fI--force\fP, \fI-f\fP ] \fIpass-name [phrase-length]\fP
 Generate a new passphrase using a wordlist specified with \fI-w\fP or \fI--wordlist\fP 
 options, or through the \fIPASSWORD_STORE_PHRASE_WORDLIST\fP environment variable. 
 The passphrase will be created by combining words from the wordlist to achieve a 
@@ -36,30 +36,34 @@ it to the clipboard using
 .BR xclip (1)
 or
 .BR wl-clipboard(1)
-and then restore the clipboard after 45 (or \fIPASSWORD_STORE_CLIP_TIME\fP) seconds. The command 
-will prompt before overwriting an existing passphrase, unless \fI--force\fP or \fI-f\fP is specified. 
+and then restore the clipboard after 45 (or \fIPASSWORD_STORE_CLIP_TIME\fP) seconds. If \fI--qrcode\fP
+or \fI-q\fP is specified, do not print the password but instead display a QR code using
+.BR qrencode (1)
+either to the terminal or graphically if supported. Prompt before overwriting an existing password,
+unless \fI--force\fP is specified. 
 
 .SH OPTIONS
 
 .TP
-\fB\-c\fP, \fB\-\-clip\fP
-Put the passphrase on the clipboard.
+\fB\-w\fP, \fB\-\-wordlist\fP
+Specify a wordlist file.
 
 .TP
 \fB\-d\fP, \fB\-\-delimiter\fP
 Specify a word delimiter.
 
 .TP
+\fB\-c\fP, \fB\-\-clip\fP
+Put the passphrase on the clipboard.
+
+.TP
+\fB\-q\fP, \fB\-\-qrcode\fP
+Display a QR code using  
+.BR qrencode (1).
+
+.TP
 \fB\-f\fP, \fB\-\-force\fP
 Do not prompt before overwriting an existing password.
-
-.TP
-\fB\-q\fP, \fB\-\-quiet\fP
-Be quiet.
-
-.TP
-\fB\-w\fP, \fB\-\-wordlist\fP
-Specify a wordlist file.
 
 .TP
 \fB\-v\fP, \fB\-\-version\fP
@@ -87,7 +91,8 @@ Allows you to override the default delimiter used in the generated passphrase.
 .SH SEE ALSO
 .BR pass (1),
 .BR xclip (1),
-.BR wl-clipboard (1)
+.BR wl-clipboard (1),
+.BR qrencode (1).
 
 .SH AUTHORS
 .B pass-phrase

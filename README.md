@@ -6,16 +6,15 @@ A [pass](https://www.passwordstore.org/) extension to generate passphrases.
 
 ```
 Usage:
-    pass phrase [--clip,-c] [--wordlist,-w] [--delimiter,-d] pass-name [phrase-length]
-	pass phrase [--clip,-c] [--wordlist,-w] [--delimiter,-d] [--force,-f] pass-name [phrase-length]
-	Generate a new passphrase 
+    pass phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--force,-f] pass-name [phrase-length]
+        Generate a new passphrase 
 
-    -c, --clip         Put the passphrase on the clipboard
-    -d, --delimiter    Specify a word delimiter
-	-f, --force        Do not prompt before overwriting
-    -q, --quiet        Be quiet
-    -v, --version      Show version information
     -w, --wordlist     Specify a wordlist file
+    -d, --delimiter    Specify a word delimiter
+    -c, --clip         Put the passphrase on the clipboard
+    -q, --qrcode       Display a QR code
+    -f, --force        Do not prompt before overwriting
+    -v, --version      Show version information
     -h, --help         Print this help message and exit
 
 More information may be found in the pass-phrase(1) man page.
@@ -47,7 +46,7 @@ $ PREFIX=$XDG_DATA_HOME \
 
 ### Arch Linux
 
-`pass-phrase` is available in the [Arch User Repository](https://aur.archlinux.org).
+`pass-phrase` is available in the [Arch User Repository](https://aur.archlinux.org/packages/pass-phrase).
 
 ```
 paru -S pass-phrase  # or your preferred AUR install method
