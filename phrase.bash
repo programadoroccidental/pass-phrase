@@ -4,7 +4,7 @@ WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/eff_large_wordl
 PHRASE_LENGTH="${PASSWORD_STORE_PHRASE_LENGTH:-12}"
 DELIMITER="${PASSWORD_STORE_PHRASE_DELIMITER:--}"
 
-VERSION="1.1"
+VERSION="1.2"
 
 cmd_phrase_version() {
 	cat <<-_EOF
@@ -13,9 +13,9 @@ cmd_phrase_version() {
 }
 
 cmd_phrase_usage() {
-	cmd_phrase_version
-	echo
-	cat <<-_EOF
+    cmd_phrase_version
+    echo
+    cat <<-_EOF
 		Usage:
 		    $PROGRAM phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--force,-f] pass-name [phrase-length]
 		        Generate a new passphrase 
@@ -33,28 +33,28 @@ cmd_phrase_usage() {
 }
 
 cmd_phrase() {
-	local path="$1"
-	local length="${2:-$PHRASE_LENGTH}"
-	check_sneaky_paths "$path"
-	[[ $length =~ ^[0-9]+$ ]] || die "Error: pass-length \"$length\" must be a number."
-	[[ $length -gt 0 ]] || die "Error: pass-length must be greater than zero."
-	local passfile="$PREFIX/$path.gpg"
-	mkdir -p -v "$PREFIX/$(dirname -- "$path")"
-	set_gpg_recipients "$(dirname -- "$path")"
-	local passfile="$PREFIX/$path.gpg"
-	set_git "$passfile"
+    local path="$1"
+    local length="${2:-$PHRASE_LENGTH}"
+    check_sneaky_paths "$path"
+    [[ $length =~ ^[0-9]+$ ]] || die "Error: pass-length \"$length\" must be a number."
+    [[ $length -gt 0 ]] || die "Error: pass-length must be greater than zero."
+    local passfile="$PREFIX/$path.gpg"
+    mkdir -p -v "$PREFIX/$(dirname -- "$path")"
+    set_gpg_recipients "$(dirname -- "$path")"
+    local passfile="$PREFIX/$path.gpg"
+    set_git "$passfile"
 
-  	[[ $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
+    [[ $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
 
-	local phrase
-	mapfile -t words < <(shuf -n "$length" "$WORDLIST")
-	phrase=$(printf "%s$DELIMITER" "${words[@]}")
-	phrase=${phrase%"$DELIMITER"}
+    local phrase
+    mapfile -t words < <(shuf -n "$length" "$WORDLIST")
+    phrase=$(printf "%s$DELIMITER" "${words[@]}")
+    phrase=${phrase%"$DELIMITER"}
 
-	echo "$phrase" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
+    echo "$phrase" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
 
-	message="Add generated passphrase for $path."
-	git_add_file "$passfile" "$message" 
+    message="Add generated passphrase for $path."
+    git_add_file "$passfile" "$message" 
 
     if [[ $clip -eq 1 ]]; then
         clip "$phrase" "$path"
@@ -70,45 +70,45 @@ opts="$($GETOPT -o hw:d:cqfv -l help,clip,delimiter:,qrcode,wordlist:,force,vers
 err=$?
 eval set -- "$opts"
 while :; do
-	case "$1" in
-		-h | --help)
-			cmd_phrase_usage
-			exit 0
-		;;
+case "$1" in
+        -h | --help)
+            cmd_phrase_usage
+            exit 0
+        ;;
 
-		-w | --wordlist)
-			shift
-			WORDLIST="$1"
-		;;
+        -w | --wordlist)
+            shift
+            WORDLIST="$1"
+        ;;
 
-		-d | --delimiter)
-			shift
-			DELIMITER="$1"
-		;;
+        -d | --delimiter)
+            shift
+            DELIMITER="$1"
+        ;;
 
-		-c | --clip)
-			clip=1
-		;;
+        -c | --clip)
+            clip=1
+        ;;
 
-		-q | --qrcode)
-			qrcode=1
-		;;
+        -q | --qrcode)
+            qrcode=1
+        ;;
 
-		-f | --force)
-			force=1
-		;;
+        -f | --force)
+            force=1
+        ;;
 
-		-v | --version)
-			cmd_phrase_version
-			exit 0
-		;;
+        -v | --version)
+            cmd_phrase_version
+            exit 0
+        ;;
 
-		--)
-			shift 
-			break
-		;;
-	esac
-	shift
+        --)
+            shift 
+            break
+        ;;
+    esac
+shift
 done
 
 
