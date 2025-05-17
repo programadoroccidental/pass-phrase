@@ -9,6 +9,7 @@ Usage:
     pass phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--force,-f] pass-name [phrase-length]
         Generate a new passphrase 
 
+Options:
     -w, --wordlist     Specify a wordlist file
     -d, --delimiter    Specify a word delimiter
     -c, --clip         Put the passphrase on the clipboard
