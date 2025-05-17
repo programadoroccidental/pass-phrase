@@ -37,6 +37,8 @@ cmd_phrase() {
 	local path="$1"
 	local length="${2:-$PHRASE_LENGTH}"
 	check_sneaky_paths "$path"
+	[[ -f "$WORDLIST" ]] || die "Error: wordlist \"$WORDLIST\" does not exist."
+	[[ -r "$WORDLIST" ]] || die "Error: wordlist \"$WORDLIST\" is not readable."
 	[[ $length =~ ^[0-9]+$ ]] || die "Error: pass-length \"$length\" must be a number."
 	[[ $length -gt 0 ]] || die "Error: pass-length must be greater than zero."
 	local passfile="$PREFIX/$path.gpg"
@@ -49,8 +51,7 @@ cmd_phrase() {
 
 	local phrase
 	mapfile -t words < <(shuf -n "$length" "$WORDLIST")
-	phrase=$(printf "%s$DELIMITER" "${words[@]}")
-	phrase=${phrase%"$DELIMITER"}
+	IFS="$DELIMITER" phrase=$(printf '%s' "${words[*]}") 
 
 	echo "$phrase" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
 
