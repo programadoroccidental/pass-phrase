@@ -14,7 +14,7 @@ Options:
     -d, --delimiter    Specify a word delimiter
     -c, --clip         Put the passphrase on the clipboard
     -q, --qrcode       Display a QR code
-	-i, --inplace      Only replace the first line of the password file
+	-i, --in-place     Only replace the first line of the password file
     -f, --force        Do not prompt before overwriting
     -v, --version      Show version information
     -h, --help         Print this help message and exit
