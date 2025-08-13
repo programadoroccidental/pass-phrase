@@ -17,7 +17,7 @@ cmd_phrase_usage() {
 	echo
 	cat <<-_EOF
 		Usage:
-		    $PROGRAM phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--force,-f] pass-name [phrase-length]
+		    $PROGRAM phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--in-place,-i | --force,-f] pass-name [phrase-length]
 		        Generate a new passphrase 
 
 		Options:
@@ -25,6 +25,7 @@ cmd_phrase_usage() {
 		    -d, --delimiter    Specify a word delimiter
 		    -c, --clip         Put the passphrase on the clipboard
 		    -q, --qrcode       Display a QR code
+		    -i, --inplace      Only replace the first line of the password file
 		    -f, --force        Do not prompt before overwriting
 		    -v, --version      Show version information
 		    -h, --help         Print this help message and exit
@@ -47,16 +48,26 @@ cmd_phrase() {
 	local passfile="$PREFIX/$path.gpg"
 	set_git "$passfile"
 
-	[[ $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
+	[[ $inplace -eq 0 && $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
 
 	local phrase
 	mapfile -t words < <(shuf -n "$length" "$WORDLIST")
 	IFS="$DELIMITER" phrase=$(printf '%s' "${words[*]}") 
-
-	echo "$phrase" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
-
+	if [[ $inplace -eq 0 ]]; then
+		echo "$pass" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
+	else
+		local passfile_temp="${passfile}.tmp.${RANDOM}.${RANDOM}.${RANDOM}.${RANDOM}.--"
+		if { echo "$phrase"; $GPG -d "${GPG_OPTS[@]}" "$passfile" | tail -n +2; } | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile_temp" "${GPG_OPTS[@]}"; then
+			mv "$passfile_temp" "$passfile"
+		else
+			rm -f "$passfile_temp"
+			die "Could not reencrypt new passphrase."
+		fi
+	fi
+	local verb="Add"
+	[[ $inplace -eq 1 ]] && verb="Replace"
 	message="Add generated passphrase for $path."
-	git_add_file "$passfile" "$message" 
+	git_add_file "$passfile" "$verb generated passphrase for ${path}."
 
 	if [[ $clip -eq 1 ]]; then
 		clip "$phrase" "$path"
@@ -68,7 +79,7 @@ cmd_phrase() {
 }
 
 
-opts="$($GETOPT -o hw:d:cqfv -l help,clip,delimiter:,qrcode,wordlist:,force,version -n "$PROGRAM $COMMAND" -- "$@")"
+opts="$($GETOPT -o hw:d:cqifv -l help,clip,delimiter:,qrcode,wordlist:,in-place,force,version -n "$PROGRAM $COMMAND" -- "$@")"
 err=$?
 eval set -- "$opts"
 while :; do
@@ -96,6 +107,10 @@ while :; do
 			qrcode=1
 		;;
 
+		-i | --in-force)
+			inplace=1
+		;;
+
 		-f | --force)
 			force=1
 		;;
@@ -114,6 +129,6 @@ while :; do
 done
 
 
-[[ $err -ne 0 || ( $# -ne 2 && $# -ne 1 ) || ( $qrcode -eq 1 && $clip -eq 1 ) ]] && die "Usage: $PROGRAM $COMMAND [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--force,-f] pass-name [phrase-length]"
+[[ $err -ne 0 || ( $# -ne 2 && $# -ne 1 ) || ( $force -eq 1 && $inplace -eq 1 ) || ( $qrcode -eq 1 && $clip -eq 1 ) ]] && die "Usage: $PROGRAM $COMMAND [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--in-place,-i | --force,-f] pass-name [phrase-length]"
 
 cmd_phrase "$@"

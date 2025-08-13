@@ -23,7 +23,7 @@ command to generate passphrases.
 .SH COMMANDS
 
 .TP
-\fBphrase\fP [ \fI--wordlist\fP, \fI-w\fP ] [ \fI--delimiter\fP, \fI-d\fP ] [ \fI--clip\fP, \fI-c\fP ] [ \fI--qrcode\fP, \fI-q\fP ] [ \fI--force\fP, \fI-f\fP ] \fIpass-name [phrase-length]\fP
+\fBphrase\fP [ \fI--wordlist\fP, \fI-w\fP ] [ \fI--delimiter\fP, \fI-d\fP ] [ \fI--clip\fP, \fI-c\fP ] [ \fI--qrcode\fP, \fI-q\fP ] [ \fI--in-place\fP, \fI-i\fP | \fI--force\fP, \fI-f\fP ] \fIpass-name [phrase-length]\fP
 Generate a new passphrase using a wordlist specified with \fI-w\fP or \fI--wordlist\fP 
 options, or through the \fIPASSWORD_STORE_PHRASE_WORDLIST\fP environment variable. 
 The passphrase will be created by combining words from the wordlist to achieve a 
@@ -40,7 +40,9 @@ and then restore the clipboard after 45 (or \fIPASSWORD_STORE_CLIP_TIME\fP) seco
 or \fI-q\fP is specified, do not print the password but instead display a QR code using
 .BR qrencode (1)
 either to the terminal or graphically if supported. Prompt before overwriting an existing password,
-unless \fI--force\fP is specified. 
+unless \fI--force\fP is specified. If \fI--in-place\fP or \fI-i\fP is specified, do not interactively prompt, 
+and only replace the first line of the password file with the new  generated  password, keeping the 
+remainder of the file intact.
 
 .SH OPTIONS
 
@@ -60,6 +62,11 @@ Put the passphrase on the clipboard.
 \fB\-q\fP, \fB\-\-qrcode\fP
 Display a QR code using  
 .BR qrencode (1).
+
+.TP
+\fB\-i\fP, \fB\-\-in\-place\fP
+Do not interactively prompt, and only replace the first line of the password 
+file with the new  generated  password, keeping the remainder of the file intact.
 
 .TP
 \fB\-f\fP, \fB\-\-force\fP

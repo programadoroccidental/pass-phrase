@@ -6,7 +6,7 @@ A [pass](https://www.passwordstore.org/) extension to generate passphrases.
 
 ```
 Usage:
-    pass phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--force,-f] pass-name [phrase-length]
+    pass phrase [--wordlist,-w] [--delimiter,-d] [--clip,-c] [--qrcode,-q] [--in-place,-i | --force,-f] pass-name [phrase-length]
         Generate a new passphrase 
 
 Options:
@@ -14,6 +14,7 @@ Options:
     -d, --delimiter    Specify a word delimiter
     -c, --clip         Put the passphrase on the clipboard
     -q, --qrcode       Display a QR code
+	-i, --inplace      Only replace the first line of the password file
     -f, --force        Do not prompt before overwriting
     -v, --version      Show version information
     -h, --help         Print this help message and exit
@@ -54,7 +55,7 @@ paru -S pass-phrase  # or your preferred AUR install method
 ```
 
 ## Donations
-If you appreciate this project and would like to support its development, you can make a donation using Bitcoin. Please send Bitcoin to the following address: `bc1qnnjtuv738jaztastkr85wsrnwcx9k9g6cda5hv`. Alternatively, you can scan the QR code below to make a donation: 
+If you appreciate this project and would like to support its development, you can make a donation using Bitcoin. Please send Bitcoin to the following address: bitcoin:bc1qnnjtuv738jaztastkr85wsrnwcx9k9g6cda5hv. Alternatively, you can scan the QR code below to make a donation: 
 
 ![address00](https://github.com/user-attachments/assets/00a048a3-4198-4857-8079-b1e05203b731)
 
