@@ -25,7 +25,7 @@ cmd_phrase_usage() {
 		    -d, --delimiter    Specify a word delimiter
 		    -c, --clip         Put the passphrase on the clipboard
 		    -q, --qrcode       Display a QR code
-		    -i, --inplace      Only replace the first line of the password file
+		    -i, --in-place     Only replace the first line of the password file
 		    -f, --force        Do not prompt before overwriting
 		    -v, --version      Show version information
 		    -h, --help         Print this help message and exit
@@ -54,7 +54,7 @@ cmd_phrase() {
 	mapfile -t words < <(shuf -n "$length" "$WORDLIST")
 	IFS="$DELIMITER" phrase=$(printf '%s' "${words[*]}") 
 	if [[ $inplace -eq 0 ]]; then
-		echo "$pass" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
+		echo "$phrase" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Passphrase encryption aborted."
 	else
 		local passfile_temp="${passfile}.tmp.${RANDOM}.${RANDOM}.${RANDOM}.${RANDOM}.--"
 		if { echo "$phrase"; $GPG -d "${GPG_OPTS[@]}" "$passfile" | tail -n +2; } | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile_temp" "${GPG_OPTS[@]}"; then
@@ -107,7 +107,7 @@ while :; do
 			qrcode=1
 		;;
 
-		-i | --in-force)
+		-i | --in-place)
 			inplace=1
 		;;
 
