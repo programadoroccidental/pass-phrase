@@ -53,10 +53,3 @@ $ PREFIX=$XDG_DATA_HOME \
 ```
 paru -S pass-phrase  # or your preferred AUR install method
 ```
-
-## Donations
-If you appreciate this project and would like to support its development, you can make a donation using Bitcoin. Please send Bitcoin to the following address: bitcoin:bc1qnnjtuv738jaztastkr85wsrnwcx9k9g6cda5hv. Alternatively, you can scan the QR code below to make a donation: 
-
-![address00](https://github.com/user-attachments/assets/00a048a3-4198-4857-8079-b1e05203b731)
-
-Thank you for your support!
