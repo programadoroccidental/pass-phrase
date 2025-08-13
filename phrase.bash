@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/eff_large_wordlist.txt}"
+WORDLIST="${PASSWORD_STORE_PHRASE_WORDLIST:-/usr/share/wordlists/eff_large_wordlist_modified.txt}"
 PHRASE_LENGTH="${PASSWORD_STORE_PHRASE_LENGTH:-12}"
 DELIMITER="${PASSWORD_STORE_PHRASE_DELIMITER:--}"
 

@@ -14,7 +14,7 @@ install:
 	install -m0755 $(PROG).bash "$(DESTDIR)$(SYSTEM_EXTENSION_DIR)/$(PROG).bash"
 	install -d "$(DESTDIR)$(SYSTEM_EXTENSION_DIR)"
 	install -d "$(DESTDIR)$(PREFIX)/share/wordlists/"
-	install -m0644 wordlists/eff_large_wordlist.txt "$(DESTDIR)$(PREFIX)/share/wordlists/eff_large_wordlist.txt"
+	install -m0644 wordlists/eff_large_wordlist_modified.txt "$(DESTDIR)$(PREFIX)/share/wordlists/eff_large_wordlist_modified.txt"
 	install -d "$(DESTDIR)$(MANDIR)/man1" 
 	install -m 0644 pass-$(PROG).1 "$(DESTDIR)$(MANDIR)/man1/pass-$(PROG).1"
 	@echo
@@ -24,7 +24,7 @@ install:
 uninstall:
 	rm -rf "$(DESTDIR)$(SYSTEM_EXTENSION_DIR)/$(PROG).bash" \
 		"$(DESTDIR)$(MANDIR)/man1/pass-$(PROG).1" \
-		"$(DESTDIR)$(PREFIX)/share/wordlists/eff_large_wordlist.txt"
+		"$(DESTDIR)$(PREFIX)/share/wordlists/eff_large_wordlist_modified.txt"
 
 lint:
 	shellcheck -s bash $(PROG).bash

@@ -2205,6 +2205,7 @@ emphases
 emphasis
 emphasize
 emphatic
+empire
 empirical
 employed
 employee
@@ -3258,7 +3259,7 @@ hesitancy
 hesitant
 hesitate
 hexagon
-hexagram
+honor
 hubcap
 huddle
 huddling
@@ -7741,11 +7742,9 @@ yelling
 yelp
 yen
 yesterday
-yiddish
 yield
 yin
 yippee
-yo-yo
 yodel
 yoga
 yogurt
