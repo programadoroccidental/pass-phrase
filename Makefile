@@ -26,7 +26,13 @@ uninstall:
 		"$(DESTDIR)$(MANDIR)/man1/pass-$(PROG).1" \
 		"$(DESTDIR)$(PREFIX)/share/wordlists/eff_large_wordlist_modified.txt"
 
+GPGKEY ?= 9635F79DD28A4A2D42385AD1D2FDE81DBBAFBE5C
+archive:
+	git archive --format=tar.gz --prefix=pass-$(PROG)-$(VERSION)/ -o pass-$(PROG)-$(VERSION).tar.gz v$(VERSION)
+	gpg --armor --detach-sig --default-key $(GPGKEY) pass-$(PROG)-$(VERSION).tar.gz
+	gpg --verify pass-$(PROG)-$(VERSION).tar.gz.asc
+
 lint:
 	shellcheck -s bash $(PROG).bash
 
-.PHONY: install lint uninstall
+.PHONY: install uninstall archive lint
