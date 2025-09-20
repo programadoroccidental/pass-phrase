@@ -66,7 +66,6 @@ cmd_phrase() {
 	fi
 	local verb="Add"
 	[[ $inplace -eq 1 ]] && verb="Replace"
-	message="Add generated passphrase for $path."
 	git_add_file "$passfile" "$verb generated passphrase for ${path}."
 
 	if [[ $clip -eq 1 ]]; then
