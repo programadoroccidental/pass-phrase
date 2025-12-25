@@ -1,6 +1,6 @@
 # pass-phrase
 
-A [pass](https://www.passwordstore.org/) extension to generate passphrases.
+A [pass](https://www.passwordstore.org/) extension for generating passphrases.
 
 ## Usage
 
